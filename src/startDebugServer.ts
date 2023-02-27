@@ -72,4 +72,6 @@ export const startDebugServer = async (esbuildOpts: BuildOptions, debugOpts: Deb
       }
     })
     .listen(debugPort)
+
+  console.log(`Debug server started on port ${debugPort}.`)
 }
