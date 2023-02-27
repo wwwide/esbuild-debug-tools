@@ -1,0 +1,13 @@
+.eslintignore
+.eslintrc
+.gitignore
+.prettierrc
+.prettierignore
+tsconfig.json
+esbuild/
+package-lock.json
+build.sh
+src/
+__tests__
+README.md
+jest.config.js
