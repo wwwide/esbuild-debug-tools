@@ -5,6 +5,7 @@
 .prettierignore
 tsconfig.json
 esbuild/
+test/
 package-lock.json
 build.sh
 src/

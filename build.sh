@@ -4,6 +4,7 @@ rm -rf ./dist
 ts-node ./esbuild/build.ts
 rm -rf ./dist/esbuild
 rm -rf ./dist/__tests__
+rm -rf ./dist/test
 find ./dist/src -name "*.js" -type f -delete
 mv ./dist/src/* ./dist
 rm -rf ./dist/src
