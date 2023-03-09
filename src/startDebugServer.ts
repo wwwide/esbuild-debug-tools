@@ -32,6 +32,15 @@ export const startDebugServer = async (esbuildOpts: BuildOptions, debugOpts: Deb
       })
     : undefined
 
+  // Change origin header.
+  if (proxy && apiPathRewrite) {
+    proxy.on('proxyReq', function (proxyReq) {
+      if (proxyReq.getHeader('origin')) {
+        proxyReq.setHeader('origin', apiPathRewrite?.original)
+      }
+    })
+  }
+
   // Create proxy debug server.
   http
     .createServer((rq, rs) => {

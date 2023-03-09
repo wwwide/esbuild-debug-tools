@@ -1,4 +1,4 @@
-import { WatchPluginOpts } from "./WatchPlugin"
+import { WatchPluginOpts } from './WatchPlugin'
 
 export type DebugServerOpts = {
   /**
