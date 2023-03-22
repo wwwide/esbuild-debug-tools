@@ -48,6 +48,7 @@ export const startDebugServer = async (esbuildOpts: BuildOptions, debugOpts: Deb
 
       // Case when we should replace alias call to original path.
       if (proxy && apiPathRewrite && rq.url?.startsWith(apiPathRewrite.alias)) {
+        rq.url = rq.url.replace(apiPathRewrite.alias, '')
         proxy.web(rq, rs, {
           target: apiPathRewrite.original,
           cookieDomainRewrite: 'localhost',
