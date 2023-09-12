@@ -17,6 +17,7 @@ export const buildConfig: BuildOptions = {
     })
   ],
   entryPoints: ['./test/index.ts'],
+  entryNames: '[dir]/[name]-[hash]',
   outdir: 'test/dist',
   bundle: true,
   metafile: true,

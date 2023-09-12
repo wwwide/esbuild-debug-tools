@@ -14,12 +14,14 @@ export const startDebugServer = async (esbuildOpts: BuildOptions, debugOpts: Deb
     plugins: [...(esbuildOpts.plugins || []), WatchPlugin(watchPluginOpts)]
   })
 
+  await ctx.rebuild()
+
   // Enable watch mode.
   await ctx.watch()
 
   // Run esbuild server.
   const { host, port } = await ctx.serve({
-    servedir: esbuildOpts.outdir
+    servedir: esbuildOpts.outdir,
   })
 
   // Prepare proxy server for redirecting cross-domain call,
@@ -47,21 +49,26 @@ export const startDebugServer = async (esbuildOpts: BuildOptions, debugOpts: Deb
       const html = readFileSync(htmlPagePath)
 
       // Case when we should replace alias call to original path.
-      if (proxy && apiPathRewrite && rq.url?.startsWith(apiPathRewrite.alias)) {
-        rq.url = rq.url.replace(apiPathRewrite.alias, '')
+      if (proxy && apiPathRewrite && rq.url?.startsWith(apiPathRewrite.prefix)) {
+        if (apiPathRewrite.removePrefix) {
+          rq.url = rq.url.replace(apiPathRewrite.prefix, '')
+        }
+
         proxy.web(rq, rs, {
           target: apiPathRewrite.original,
           cookieDomainRewrite: 'localhost',
           secure: false,
-          changeOrigin: true
+          changeOrigin: true,
         })
       } else {
+  
+        
         const options = {
           hostname: host,
           port: port,
           path: rq.url,
           method: rq.method,
-          headers: rq.headers
+          headers: rq.headers,
         }
 
         const proxyReq = http.request(options, (proxyRes) => {
